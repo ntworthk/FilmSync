@@ -41,8 +41,23 @@ async function capturePhoto() {
         
         const photoDataUrl = canvas.toDataURL('image/jpeg', 0.7);
         
+        // Get ISO string with timezone offset
+        const now = new Date();
+        const tzOffset = -now.getTimezoneOffset();
+        const diffHrs = Math.floor(Math.abs(tzOffset) / 60);
+        const diffMins = Math.abs(tzOffset) % 60;
+        const tzString = `${tzOffset >= 0 ? '+' : '-'}${String(diffHrs).padStart(2, '0')}:${String(diffMins).padStart(2, '0')}`;
+        const timestamp = now.getFullYear() +
+            '-' + String(now.getMonth() + 1).padStart(2, '0') +
+            '-' + String(now.getDate()).padStart(2, '0') +
+            'T' + String(now.getHours()).padStart(2, '0') +
+            ':' + String(now.getMinutes()).padStart(2, '0') +
+            ':' + String(now.getSeconds()).padStart(2, '0') +
+            '.' + String(now.getMilliseconds()).padStart(3, '0') +
+            tzString;
+        
         const photoEntry = {
-            timestamp: new Date().toISOString(),
+            timestamp: timestamp,
             location: {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
@@ -118,8 +133,14 @@ function updatePhotoList() {
         const meta = document.createElement('div');
         meta.className = 'photo-meta';
         const date = new Date(photo.timestamp);
+        // Format date with timezone offset
+        const timeZoneOffset = date.getTimezoneOffset();
+        const offsetHours = Math.abs(Math.floor(timeZoneOffset / 60));
+        const offsetMinutes = Math.abs(timeZoneOffset % 60);
+        const timeZoneString = `${timeZoneOffset <= 0 ? '+' : '-'}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
+        
         meta.innerHTML = `
-            ${date.toLocaleString()}<br>
+            ${date.toLocaleString()} (${photo.timestamp.slice(-6)})<br>
             ${photo.location.latitude.toFixed(6)}, ${photo.location.longitude.toFixed(6)}
         `;
         
