@@ -150,10 +150,25 @@ function updatePhotoList() {
     });
 }
 
+function deleteAllData() {
+    if (confirm('Are you sure you want to delete ALL data? This cannot be undone.')) {
+        photoData = {
+            rolls: {},
+            currentRoll: 1
+        };
+        currentRoll = 1;
+        photoData.rolls[currentRoll] = [];
+        localStorage.removeItem('photoData');
+        updatePhotoList();
+        updateRollInfo();
+    }
+}
+
 // Initialize
 document.getElementById('captureBtn').addEventListener('click', capturePhoto);
 document.getElementById('newRollBtn').addEventListener('click', startNewRoll);
 document.getElementById('exportBtn').addEventListener('click', exportData);
+document.getElementById('deleteAllBtn').addEventListener('click', deleteAllData);
 
 initCamera();
 updateRollInfo();
