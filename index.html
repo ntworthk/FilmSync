@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Film Photography Companion</title>
+    <title>FilmSync</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="roll-info">
-            <h2>Current Roll: <span id="rollNumber">1</span></h2>
-            <p>Photos: <span id="photoCount">0</span>/36</p>
+            <div class="roll-header">
+                <p>Photos: <span id="photoCount">0</span></p>
+                <button id="newRollBtn">Start new roll</button>
+            </div>
         </div>
 
         <video id="viewfinder" autoplay playsinline></video>
         <img id="photo" alt="Captured photo">
         
-        <button id="captureBtn">Take Reference Photo</button>
-        <button id="newRollBtn">Start New Roll</button>
-        <button id="exportBtn">Export Data</button>
+        <button id="captureBtn">Take photo</button>
+        <button id="exportBtn">Export data</button>
 
         <div class="photos" id="photoList"></div>
     </div>

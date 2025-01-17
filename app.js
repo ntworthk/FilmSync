@@ -27,10 +27,6 @@ async function initCamera() {
 }
 
 async function capturePhoto() {
-    if (photoData.rolls[currentRoll].length >= 36) {
-        alert('Roll is full! Start a new roll to continue.');
-        return;
-    }
 
     try {
         const position = await getCurrentPosition();
@@ -102,7 +98,6 @@ function saveToLocalStorage() {
 }
 
 function updateRollInfo() {
-    document.getElementById('rollNumber').textContent = currentRoll;
     document.getElementById('photoCount').textContent = 
         photoData.rolls[currentRoll] ? photoData.rolls[currentRoll].length : 0;
 }
@@ -124,7 +119,6 @@ function updatePhotoList() {
         meta.className = 'photo-meta';
         const date = new Date(photo.timestamp);
         meta.innerHTML = `
-            <strong>Frame ${index + 1}</strong><br>
             ${date.toLocaleString()}<br>
             ${photo.location.latitude.toFixed(6)}, ${photo.location.longitude.toFixed(6)}
         `;
